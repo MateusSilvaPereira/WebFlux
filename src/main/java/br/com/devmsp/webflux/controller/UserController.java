@@ -1,5 +1,7 @@
 package br.com.devmsp.webflux.controller;
 
+import br.com.devmsp.webflux.model.request.UserRequest;
+import br.com.devmsp.webflux.model.response.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
