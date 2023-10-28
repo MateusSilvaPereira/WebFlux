@@ -14,22 +14,21 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(DuplicateKeyException.class)
-    ResponseEntity<Mono<StandardError>> duplicateKeyException(DuplicateKeyException ex, ServerHttpRequest request) {
-       return ResponseEntity.badRequest()
-                .body(Mono.just(
-                        StandardError.builder()
-                                .timestamp(now())
-                                .status(BAD_REQUEST.value())
-                                .error(BAD_REQUEST.getReasonPhrase())
-                                .message(verifyDupKey(ex.getMessage()))
-                                .path(request.getPath().toString())
-                                .build()
+    ResponseEntity<Mono<StandardError>> duplicateKeyException(
+            DuplicateKeyException ex, ServerHttpRequest request) {
+        return ResponseEntity.badRequest()
+                .body(Mono.just(StandardError.builder()
+                        .timestamp(now())
+                        .status(BAD_REQUEST.value())
+                        .error(BAD_REQUEST.getReasonPhrase())
+                        .message(verifyDupKey(ex.getMessage())).path(request.getPath().toString())
+                        .build()
                 ));
 
     }
 
-    private String verifyDupKey(String message){
-        if(message.contains("email dup key")){
+    private String verifyDupKey(String message) {
+        if (message.contains("email dup key")) {
             return "E-mail already registered";
         }
         return "Dup key exception";
