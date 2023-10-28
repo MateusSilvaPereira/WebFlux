@@ -1,6 +1,7 @@
 package br.com.devmsp.webflux.controller.impl;
 
 import br.com.devmsp.webflux.controller.UserController;
+import br.com.devmsp.webflux.mapper.UserMapper;
 import br.com.devmsp.webflux.model.request.UserRequest;
 import br.com.devmsp.webflux.model.response.UserResponse;
 import br.com.devmsp.webflux.service.UserService;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 public class UserControllerImp implements UserController {
 
     private final UserService service;
+    private final UserMapper mapper;
 
     @Override
     public ResponseEntity<Mono<Void>> save(UserRequest request) {
@@ -26,8 +28,8 @@ public class UserControllerImp implements UserController {
     }
 
     @Override
-    public ResponseEntity<Mono<UserResponse>> find(String id) {
-        return null;
+    public ResponseEntity<Mono<UserResponse>> findById(String id) {
+        return ResponseEntity.ok().body(service.findById(id).map(mapper::toResponse));
     }
 
     @Override
